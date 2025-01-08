@@ -1,0 +1,54 @@
+*{
+    box-sizing: border-box !important;
+
+}
+body{
+    width: 100vw !important;
+}
+input:focus{
+    outline: none !important;
+    box-shadow: none !important;
+
+}
+.passwd-box,.email-box,.login_email-box,.login_passwd-box{
+    position: relative;
+    width: 100% !important;  
+}
+
+#eye,#login_eye{
+    font-size:18px; 
+    position:absolute;
+    z-index:1;
+    color: #ccc;
+    top:25%;
+    right:4%;  
+    cursor: pointer;
+}
+#loader,#login-loader{
+    font-size:18px; 
+    position:absolute;
+    z-index:1;
+    color: #ccc;
+    top:25%;
+    right:4%;  
+    cursor: pointer;
+}
+#code_input,#login_code_input{
+    width: 100%;
+    border: none;
+    border-radius: 4px;
+    padding: .375rem .75rem;
+    box-shadow: none;
+}
+#code_input:active{
+    outline: none;
+}
+.font{
+    font-family: "Sixtyfour", serif;
+  /* font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "BLED" 0,
+    "SCAN" 0; */
+}
