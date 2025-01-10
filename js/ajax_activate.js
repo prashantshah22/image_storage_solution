@@ -22,7 +22,7 @@ $(document).ready(() => {
                     $("#code_input").val("");
                     var warning = document.createElement("div");
                     warning.className = "alert alert-warning";
-                    warning.innerHTML = "<b>Wrong Activation Code</b>";
+                    warning.innerHTML = "<b>"+response+"</b>";
                     $(".signup-notice").append(warning);
                     setTimeout(() => {
                         $(".signup-notice").html("");

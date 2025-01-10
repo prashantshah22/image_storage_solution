@@ -21,7 +21,7 @@ function sendActivationEmail($toEmail, $authCode) {
 
         $mail->isHTML(true);
         $mail->Subject = 'IMAGE Storage Solution Activation Code';
-        $mail->Body = "Your activation code: '<b><i>$authCode </i></b>'"; 
+        $mail->Body = "Your activation code: <b><i>$authCode</i></b>"; 
 
         $mail->send();
         return true;

@@ -69,7 +69,7 @@ $(document).ready(()=>{
                                 var json_response=JSON.parse(respons);
                                 $(".used_memory").html(json_response[0]);
                                 var percentage=json_response[2]+"%";
-                                $(".free_memory").html("FREE SPACE: "+json_response[1]+"MB");
+                                $(".free_memory").html("FREE SPACE: "+json_response[1]);
                                 $(".memory-progress").css("width",percentage);
                             }
                         })

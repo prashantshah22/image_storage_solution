@@ -56,13 +56,18 @@ if (empty($_SESSION['username'])) {
           <span class="free_memory">
             <?php
                   $username = $_SESSION['username'];
-                  $get_status = "SELECT storage,used_storage from user where username='$username'";
+                  $get_status = "SELECT plans,storage,used_storage from user where username='$username'";
                   $response = $db->query($get_status);
                   $data = $response->fetch_assoc();
                   $total = $data['storage'];
                   $used = $data['used_storage'];
+                  $plan=$data['plans'];
+                  if($plan=="starter"|| $plan=="free"){
                   $free_sapce=$total-$used;
-                  echo "FREE SPACE: ".$free_sapce."MB";
+                  echo "FREE SPACE: ".$free_sapce."MB";}
+                  else{
+                    echo "FREE SPACE: Unlimited";
+                  }
               ?>
           </span>
           <div class="progress upload_progress_con d-none my-2 w-50" role="progressbar" style="height:5px;">
@@ -79,11 +84,14 @@ if (empty($_SESSION['username'])) {
           <h1 style="font-size:18px;font-weight:900;text-transform:uppercase;">Memory Status</h1>
           <span class="used_memory">
             <?php
-            $get_status = "SELECT storage,used_storage from user where username='$username'";
+            $get_status = "SELECT plans,storage,used_storage from user where username='$username'";
             $response = $db->query($get_status);
             $data = $response->fetch_assoc();
             $total = $data['storage'];
             $used = $data['used_storage'];
+            $plan=$data['plans'];
+            if($plan=="starter"|| $plan=="free"){
+              $display="d-block";
             echo $used . "MB/" . $total . "MB";
             $percentage = round(($used / $total) * 100, 2);
             $color = "";
@@ -91,17 +99,20 @@ if (empty($_SESSION['username'])) {
               $color = "bg-danger";
             } else {
               $color = "bg-primary";
+            }}
+            else{
+              $display="d-none";
+              echo "Used: ".$used."MB";
             }
             ?>
           </span>
-          <div class="progress my-2 w-50" role="progressbar" style="height:5px;">
+          <div class="progress my-2 w-50 <?php echo $display;?>" role="progressbar" style="height:5px;">
             <div class="progress-bar memory-progress <?php echo $color; ?>" style="width:<?php echo $percentage . "%"; ?>"></div>
           </div>
         </div>
       </div>
 
       <div class="col-md-6">
-
       </div>
       <div class="col-md-3">
         <div class="w-100 p-3 bg-white rounded-1 shadow-lg d-flex flex-column justify-content-center align-items-center">

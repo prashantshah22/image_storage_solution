@@ -1,9 +1,42 @@
 <?php
 session_start();
+require("../php/database.php");
+$username=$_SESSION['username'];
 if (empty($_SESSION['username'])) {
   header("Location:../index.php");
-  exit;
-}
+  exit();}
+  $starter='<ul class="list-group text-center ">
+        <li class="list-group-item bg-primary">
+            <h1 class="bg-primary fw-1 fx-1 text-light font">STARTER PLAN</h1>
+        </li>
+        <li class="list-group-item font_size">1 GB Storage</li>
+        <li class="list-group-item disable font_size">24/7 TECHNICAL SUPPORT</li>
+        <li class="list-group-item disable font_size">INSTANT EMAIL SOLUTION</li>
+        <li class="list-group-item disable font_size">DATA SECURITY</li>
+        <li class="list-group-item disable font_size">SEO SERVICE</li>
+        <li class="list-group-item bg-primary">
+            <h3 class="bg-primary fw-1 fx-1 text-light font buy_btn"amount="99" plan="starter" storage="1024">Rs. 99/Mo</h3>
+        </li>
+        </ul>';
+$exclusive='<ul class="list-group text-center ">
+        <li class="list-group-item bg-success">
+            <h1 class=" fw-1 fx-1 text-white font">EXCLUSIVE PLAN</h1>
+        </li>
+        <li class="list-group-item font_size">Unlimited</li>
+        <li class="list-group-item font_size">24/7 TECHNICAL SUPPORT</li>
+        <li class="list-group-item font_size">INSTANT EMAIL SOLUTION</li>
+        <li class="list-group-item font_size">DATA SECURITY</li>
+        <li class="list-group-item font_size">SEO SERVICE</li>
+        <li class="list-group-item bg-success">
+            <h3 class="bg-success fw-1 fx-1 text-light font buy_btn" amount="500" plan="exclusive" storage="unlimited">Rs. 500/Mo</h3>
+        </li>
+        </ul>';
+
+        $select_plans = "SELECT plans from user where username='$username'";
+        $response = $db->query($select_plans);
+        $data = $response->fetch_assoc();
+        $plan=$data['plans'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +83,7 @@ if (empty($_SESSION['username'])) {
       $response = $db->query($get_name);
       $name = $response->fetch_assoc();
       echo "Mr. " . strtoupper($name['fullname']);
+      $_SESSION['fullname']=$name['fullname'];
       ?>
     </a>
     <ul class="navbar-nav ms-auto">
@@ -63,34 +97,22 @@ if (empty($_SESSION['username'])) {
   <div class="container-fluid">
     <div class="row p-4 p-md-2">
         <div class="col-md-6  mt-md-0 mt-5">
-        <ul class="list-group text-center ">
-        <li class="list-group-item bg-primary">
-            <h1 class="bg-primary fw-1 fx-1 text-light font">STARTER PLAN</h1>
-        </li>
-        <li class="list-group-item font_size">1 GB Storage</li>
-        <li class="list-group-item disable font_size">24/7 TECHNICAL SUPPORT</li>
-        <li class="list-group-item disable font_size">INSTANT EMAIL SOLUTION</li>
-        <li class="list-group-item disable font_size">DATA SECURITY</li>
-        <li class="list-group-item disable font_size">SEO SERVICE</li>
-        <li class="list-group-item bg-primary">
-            <h3 class="bg-primary fw-1 fx-1 text-light font buy_btn"amount="99" plan="starter">Rs. 99/Mo</h3>
-        </li>
-        </ul>
+        <?php 
+              if($plan=="free"){
+                echo $starter;
+              }
+              else if($plan=="starter"){
+                echo '<button class="btn btn-warning shadow-lg p-5"><h1>You Are currently using starter plan</h1></button>';
+
+              }
+            ?>
         </div>
         <div class="col-md-6 mt-5 mt-md-0">
-        <ul class="list-group text-center ">
-        <li class="list-group-item bg-success">
-            <h1 class=" fw-1 fx-1 text-white font">EXCLUSIVE PLAN</h1>
-        </li>
-        <li class="list-group-item font_size">1 TB Storage</li>
-        <li class="list-group-item font_size">24/7 TECHNICAL SUPPORT</li>
-        <li class="list-group-item font_size">INSTANT EMAIL SOLUTION</li>
-        <li class="list-group-item font_size">DATA SECURITY</li>
-        <li class="list-group-item font_size">SEO SERVICE</li>
-        <li class="list-group-item bg-success">
-            <h3 class="bg-success fw-1 fx-1 text-light font buy_btn" amount="500" plan="exclusive">Rs. 500/Mo</h3>
-        </li>
-        </ul>
+        <?php 
+              if($plan=="free" || $plan="exclusive"){
+                echo $exclusive;
+              }
+            ?>
         </div>
     </div> 
     </div>
@@ -102,7 +124,8 @@ if (empty($_SESSION['username'])) {
             $(this).click(function(){
                 var amt=$(this).attr("amount");
                 var plan=$(this).attr("plan");
-                alert(amt+"......"+plan);
+                var storage=$(this).attr("storage");
+                location.href=`php/payment.php?amount=${amt}&plan=${plan}&storage=${storage}`;
             })
         })
     })
