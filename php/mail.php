@@ -9,19 +9,19 @@ function sendActivationEmail($toEmail, $authCode) {
 
     try {
         $mail->isSMTP();
-        $mail->Host = 'mail.a.com'; 
+        $mail->Host = 'mail.prashantshah.info.np'; 
         $mail->SMTPAuth = true;
-        $mail->Username = 'a@a.com'; 
-        $mail->Password = 'a@a.com'; 
+        $mail->Username = 'no-reply@prashantshah.info.np'; 
+        $mail->Password = 'ravi.sah22'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         $mail->Port = 465;
 
-        $mail->setFrom('a@a.com', 'IMAGE Storage Solution');
+        $mail->setFrom('no-reply@prashantshah.info.np', 'IMAGE Storage Solution');
         $mail->addAddress($toEmail);
 
         $mail->isHTML(true);
         $mail->Subject = 'IMAGE Storage Solution Activation Code';
-        $mail->Body = "Your activation code: <b><i>$authCode </i></b>"; 
+        $mail->Body = "Your activation code: <b><i>$authCode</i></b>"; 
 
         $mail->send();
         return true;
